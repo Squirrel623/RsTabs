@@ -1,9 +1,16 @@
 {
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+  ],
   "compilerOptions": {
     "lib": ["es6", "es2016.array.include", "dom"],
     "module": "es6",
     "moduleResolution": "node",
     "target": "es6",
     "strict": true,
+    "noImplicitAny": true,
   }
 }

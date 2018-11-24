@@ -1,7 +1,32 @@
 {
   "private": true,
   "name": "rs-tabs",
-  "workspaces": [
-    "packages/*"
-  ]
+  "scripts": {
+    "build:extractor": "webpack --config src/file-extractor/webpack.config.js",
+    "build:viewer": "webpack --config src/song-viewer/webpack.config.js",
+    "demo:extractor": "webpack-dev-server --config src/file-extractor/webpack.config.js",
+    "demo:viewer": "webpack-dev-server --config src/song-viewer/webpack.config.js"
+  },
+  "devDependencies": {
+    "@types/vexflow": "^1.2.32",
+    "copy-webpack-plugin": "^4.6.0",
+    "css-loader": "^1.0.1",
+    "node-sass": "^4.10.0",
+    "sass-loader": "^7.1.0",
+    "ts-loader": "^5.3.0",
+    "typescript": "^3.1.6",
+    "vue-loader": "^15.4.2",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "dependencies": {
+    "aes-js": "^3.1.2",
+    "pako": "^1.0.6",
+    "vue": "^2.5.17",
+    "vuex": "^3.0.1",
+    "webpack": "^4.26.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10",
+    "vexflow": "^1.2.87"
+  }
 }

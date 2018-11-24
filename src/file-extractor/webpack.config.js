@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './demo/index.ts',
+  entry: path.resolve(__dirname, 'demo/index.ts'),
   devtool: false,
   mode: 'development',
   module: {
@@ -17,5 +17,10 @@ module.exports = {
   output: {
     filename: 'dist.js',
     path: path.resolve(__dirname, 'demo'),
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'demo'),
+    compress: true,
+    port: 8001,
   }
 };

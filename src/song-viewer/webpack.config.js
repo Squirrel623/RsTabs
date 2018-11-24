@@ -3,7 +3,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: path.resolve(__dirname, './index.ts'),
   devtool: false,
   mode: 'development',
   module: {
@@ -33,7 +33,7 @@ module.exports = {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new CopyWebpackPlugin(['src/index.html']),
+    new CopyWebpackPlugin([path.resolve(__dirname, 'index.html')]),
   ],
   resolve: {
     alias: {
