@@ -1,0 +1,21 @@
+{
+  "name": "file-extractor",
+  "version": "1.0.0",
+  "main": "dist/lib-modules/index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "test": "webpack"
+  },
+  "dependencies": {
+    "aes-js": "^3.1.2",
+    "pako": "^1.0.6"
+  },
+  "devDependencies": {
+    "ts-loader": "^5.3.0",
+    "typescript": "^3.1.6",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
