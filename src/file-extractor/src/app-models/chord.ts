@@ -9,7 +9,7 @@ export class Chord {
   private _ChordName: string = '';
   public get ChordName() {return this._ChordName;}
 
-  private _Duration: number = -1;
+  private _Duration: number = 0;
   public get Duration() {return this._Duration;}
 
   private _Notes: Note[] = [];
@@ -28,7 +28,7 @@ export class Chord {
     const template = sngChordTemplates[chord.ChordId];
 
     chord._Start = sngChord.Time;
-    chord._Duration = sngChord.Sustain;
+    chord._Duration = sngChord.Sustain && sngChord.Sustain > 0 ? sngChord.Sustain : 0;
     chord._ChordName = template.ChordName;
     chord._Notes = Note.FromSngChord(sngChord, template);
 

@@ -30,6 +30,18 @@ export function shallowArraysEqual<T>(first: T[], second: T[]): boolean {
   return true;
 }
 
+export function flattenArray(arr: any): any {
+  let retArray = new Array();
+  for (let item of arr) {
+    if (Array.isArray(item)) {
+      retArray = retArray.concat(item);
+    } else {
+      retArray.push(item);
+    }
+  }
+  return retArray;
+}
+
 export function unique<T>(arr: T[]): T[] {
   const retVal: T[] = [];
   for (let val of arr) {

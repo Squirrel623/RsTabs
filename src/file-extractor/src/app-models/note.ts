@@ -4,8 +4,9 @@ import { SongChord } from "../models/chord";
 
 export interface BendValue {
   Start: number;
-  RelativePosition: number;
+  //RelativePosition: number;
   Step: number;
+  Unk: number;
 }
 
 export enum SlideType {
@@ -32,6 +33,10 @@ export class Note {
   public get IsPullOff() {return this._PullOff;}
   private _HammerOn: boolean = false;
   public get IsHammerOn() {return this._HammerOn;}
+  public _Bend: boolean = false;
+  public get IsBend() {return this._Bend;}
+  public _BendValues: BendValue[] = [];
+  public get BendValues(): ReadonlyArray<BendValue> {return this._BendValues;}
 
   public static FromSngNote(sngNote: SongNote): Note {
     const note = new Note();
@@ -53,6 +58,20 @@ export class Note {
     if (sngNote.HammerOn && sngNote.HammerOn > 0) {
       note._HammerOn = true;
     }
+    if (sngNote.Bend && sngNote.Bend > 0) {
+      note._Bend = true;
+
+      if (!sngNote.BendValues || !sngNote.BendValues.length) {
+        throw new Error('Expected bend values');
+      }
+      note._BendValues = sngNote.BendValues.map(bv => {
+        return {
+          Start: bv.Time,
+          Step: bv.Step,
+          Unk: bv.Unk5,
+        };
+      });
+    }
 
     return note;
   }
@@ -63,6 +82,7 @@ export class Note {
 
     if (template.Fret0 !== -1) {
       const newNote = new Note();
+      newNote._Start = chord.Time;
       newNote._Fret = template.Fret0;
       newNote._Duration = chord.Sustain;
       newNote._String = 0;
@@ -70,6 +90,7 @@ export class Note {
     }
     if (template.Fret1 !== -1) {
       const newNote = new Note();
+      newNote._Start = chord.Time;
       newNote._Fret = template.Fret1;
       newNote._Duration = chord.Sustain;
       newNote._String = 1;
@@ -77,6 +98,7 @@ export class Note {
     }
     if (template.Fret2 !== -1) {
       const newNote = new Note();
+      newNote._Start = chord.Time;
       newNote._Fret = template.Fret2;
       newNote._Duration = chord.Sustain;
       newNote._String = 2;
@@ -84,6 +106,7 @@ export class Note {
     }
     if (template.Fret3 !== -1) {
       const newNote = new Note();
+      newNote._Start = chord.Time;
       newNote._Fret = template.Fret3;
       newNote._Duration = chord.Sustain;
       newNote._String = 3;
@@ -91,6 +114,7 @@ export class Note {
     }
     if (template.Fret4 !== -1) {
       const newNote = new Note();
+      newNote._Start = chord.Time;
       newNote._Fret = template.Fret4;
       newNote._Duration = chord.Sustain;
       newNote._String = 4;
@@ -98,6 +122,7 @@ export class Note {
     }
     if (template.Fret5 !== -1) {
       const newNote = new Note();
+      newNote._Start = chord.Time;
       newNote._Fret = template.Fret5;
       newNote._Duration = chord.Sustain;
       newNote._String = 5;
