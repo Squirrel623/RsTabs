@@ -9,6 +9,10 @@ export class Stream {
     return this.currentOffset;
   }
 
+  public setOffset(offset: number) {
+    this.currentOffset = offset;
+  }
+
   public backtrack(amount: number): void {
     if (amount > this.currentOffset) {
       throw new Error('Cant backtrack');

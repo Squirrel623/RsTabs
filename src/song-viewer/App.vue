@@ -1,27 +1,29 @@
 <template>
   <div>
     <input type="file" @change="inputChanged"></input>
-    <span>
+    <div>
       <button @click="startPlayer">Start</button>
       <button @click="stopPlayer">Stop</button>
-    </span>
-    <div>{{strings['0']}}</div>
+    </div>
+    <!-- <div>{{strings['0']}}</div>
     <div>{{strings['1']}}</div>
     <div>{{strings['2']}}</div>
     <div>{{strings['3']}}</div>
     <div>{{strings['4']}}</div>
-    <div>{{strings['5']}}</div>
+    <div>{{strings['5']}}</div> -->
+    <canvas ref="canvas" style="width: 1000px; height: 300px;"></canvas>
   </div>
 </template>
 <script lang='ts'>
 import Vue from 'vue';
 import {Player} from './player/player';
 import { PSARCBrowser, Track, Note } from '../file-extractor/src';
+import { CanvasPlayer } from './player/canvas-player';
 
 export default Vue.extend({
   data() {
     return {
-      player: null as Player|null,
+      player: null as CanvasPlayer|null,
       strings: {
         '0': '-',
         '1': '-',
@@ -64,8 +66,11 @@ export default Vue.extend({
         const browser = new PSARCBrowser(reader.result as ArrayBuffer);
         const song = browser.getArrangement('lead');
         const track = new Track(song);
-        this.player = new Player(track);
-        this.player.setNotesChangedCallback(this.notesChangedCallback.bind(this));
+        const audio = browser.getSongAudio();
+        if (!audio) {
+          throw new Error('');
+        }
+        this.player = new CanvasPlayer(track, this.$refs.canvas as HTMLCanvasElement, audio);
       }
 
       reader.readAsArrayBuffer(file);

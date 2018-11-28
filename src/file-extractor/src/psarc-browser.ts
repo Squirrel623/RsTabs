@@ -1,8 +1,9 @@
-import { PSARCLoader, Entry } from "./deserializer/psarc-loader";
+import { PSARCLoader, Entry, readWemFileId } from "./deserializer/psarc-loader";
 import { arrayBufferToString } from "./utils/utils";
 import { unpackSng, Song2014 } from "./models/sng";
 import { Sng2014File } from './deserializer/sng-importer';
 import { Stream } from "./utils/stream";
+import { getAudioFromArchive } from './deserializer/audio-extractor';
 
 export class PSARCBrowser {
   private readonly psarcLoader: PSARCLoader;
@@ -25,6 +26,22 @@ export class PSARCBrowser {
       throw new Error('cant find part');
     }
     this.Identifier = identifier;
+  }
+
+  public getSongAudio(): ArrayBuffer|null {
+    const toc = this.psarcLoader.getTableOfContents();
+    const tocEntry = toc.filter((entry) => entry.name.includes(`song_${this.Identifier}.bnk`));
+    if (tocEntry.length !== 1) {
+      throw new Error('');
+    }
+
+    const audioTocId = readWemFileId(tocEntry[0].data);
+    const audioEntry = toc.filter((entry) => entry.name.includes(`${audioTocId}.wem`));
+    if (audioEntry.length !== 1) {
+      throw new Error('');
+    }
+
+    return getAudioFromArchive(audioEntry[0].data);
   }
 
   public getArrangement(arrangement: string) {

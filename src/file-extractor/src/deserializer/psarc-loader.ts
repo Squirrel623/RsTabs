@@ -162,3 +162,19 @@ export class PSARCLoader {
     this.tableOfContents = toc;
   }
 }
+
+export function readWemFileId(src: ArrayBuffer): string {
+  const srcStream = new Stream(src, undefined, true);
+  srcStream.readBytes(4);
+  const lenBKHD = srcStream.readUInt32();
+  const offset = lenBKHD + 8;
+  srcStream.setOffset(offset);
+  srcStream.readBytes(4);
+
+  const lenDIDX = srcStream.readUInt32();
+  if (lenDIDX / 12 > 1) {
+    throw new Error('wrong');
+  }
+
+  return srcStream.readUInt32().toString();
+}

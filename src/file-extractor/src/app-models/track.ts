@@ -15,6 +15,9 @@ export class Track {
   private _Measures: Measure[] = [];
   public get Measures(): ReadonlyArray<Measure> {return this._Measures;}
 
+  /* private _AudioBuffer: ArrayBuffer;
+  public get AudioBuffer() {return this._AudioBuffer;} */
+
   constructor(sngData: Song2014) {
     this._SongLength = sngData.SongLength;
     this._StartTime = sngData.StartBeat;

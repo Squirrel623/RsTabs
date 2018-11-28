@@ -49,5 +49,22 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 8000,
+    before: function(app) {
+      // use proper mime-type for wasm files
+      app.get('*.wasm', function(req, res, next) {
+          var options = {
+              root: path.join(__dirname, 'dist'),
+              dotfiles: 'deny',
+              headers: {
+                  'Content-Type': 'application/wasm'
+              }
+          };
+          res.sendFile(req.url, options, function (err) {
+              if (err) {
+                  next(err);
+              }
+          });
+      });
+    }
   }
 };

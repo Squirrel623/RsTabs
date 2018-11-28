@@ -5,8 +5,10 @@ import { Song2014 } from "../models/sng";
 export class Measure {
   private _Start: number = -1;
   public get Start() {return this._Start;}
+  public get StartMs() {return this._Start * 1000;}
   private _End: number = -1;
   public get End() {return this._End;}
+  public get EndMs() {return this._End * 1000;}
   private _BeatTimes: number[] = [];
   public get BeatTimes(): ReadonlyArray<number> {return this._BeatTimes};
   private _Notes: Note[] = [];
