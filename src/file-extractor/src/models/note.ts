@@ -33,7 +33,7 @@ export class SongNote {
   public Sustain?: number;
   public Tremolo?: number;
   public HarmonicPinch?: number;
-  public PickDirection?: number;
+  public PickDirection: number = -2;
   public RightHand: number = -1;
   public SlideUnpitchedTo: number = -1;
   public Tap: number = 0;

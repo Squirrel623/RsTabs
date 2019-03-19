@@ -1,17 +1,16 @@
 <template>
-  <div>
-    <input type="file" @change="inputChanged"></input>
-    <div>
-      <button @click="startPlayer">Start</button>
-      <button @click="stopPlayer">Stop</button>
+  <div id="app">
+    <header id="header">Rocksmith DLC Song Viewer</header>
+    <div id="track">
+      <canvas ref="canvas"></canvas>
     </div>
-    <!-- <div>{{strings['0']}}</div>
-    <div>{{strings['1']}}</div>
-    <div>{{strings['2']}}</div>
-    <div>{{strings['3']}}</div>
-    <div>{{strings['4']}}</div>
-    <div>{{strings['5']}}</div> -->
-    <canvas ref="canvas" style="width: 1000px; height: 300px;"></canvas>
+    <div id="main">
+      <input type="file" @change="inputChanged"></input>
+      <div>
+        <button @click="startPlayer">Start</button>
+        <button @click="stopPlayer">Stop</button>
+      </div>
+    </div>
   </div>
 </template>
 <script lang='ts'>
@@ -24,29 +23,11 @@ export default Vue.extend({
   data() {
     return {
       player: null as CanvasPlayer|null,
-      strings: {
-        '0': '-',
-        '1': '-',
-        '2': '-',
-        '3': '-',
-        '4': '-',
-        '5': '-',
-      }
     };
   },
   mounted(): void {
   },
   methods: {
-    notesChangedCallback(notes: ReadonlyArray<Note>): void {
-      for (let string in this.strings) {
-        //@ts-ignore
-        this.strings[string] = '-'
-      }
-      for (let note of notes) {
-        //@ts-ignore
-        this.strings[note.String.toString()] = note.Fret;
-      }
-    },
     inputChanged(event: Event): void {
       if (!event.target) {
         return;
@@ -91,7 +72,49 @@ export default Vue.extend({
 });
 </script>
 <style lang="scss">
-#test {
-  color: red;
+body, html {
+  margin: 0px;
+  width: 100%;
+  height: 100%;
 }
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: grid;
+
+  grid-template-columns: 50px auto 50px;
+  grid-template-rows: 50px 300px auto;
+
+  @media screen and (max-width: 600px) {
+    grid-template-columns: 0px auto 0px;
+    grid-template-rows: 50px 300px auto;
+  }
+
+  grid-template-areas:
+    ". header ."
+    ". track  ."
+    ". main   .";
+}
+
+#header {
+  grid-area: header;
+}
+
+#track {
+  width: 100%;
+  height: 100%;
+
+  grid-area: track;
+  canvas {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+#main {
+  grid-area: main;
+};
+
+
 </style>

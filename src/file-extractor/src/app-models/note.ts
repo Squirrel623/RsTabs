@@ -37,12 +37,16 @@ export class Note {
   public get IsBend() {return this._Bend;}
   public _BendValues: BendValue[] = [];
   public get BendValues(): ReadonlyArray<BendValue> {return this._BendValues;}
+  private _PickDirection: number = -1;
+  public get PickDirection() {return this._PickDirection;}
 
   public static FromSngNote(sngNote: SongNote): Note {
     const note = new Note();
     note._Start = sngNote.Time ;
     note._String = sngNote.String === 0 ? 0 : sngNote.String || -1;
     note._Fret = sngNote.Fret === 0 ? 0 : sngNote.Fret || -1;
+    note._PickDirection = sngNote.PickDirection;
+
     if (sngNote.Sustain && sngNote.Sustain > 0) {
       note._Duration = sngNote.Sustain;
     }
